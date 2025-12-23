@@ -10,6 +10,16 @@ const createNotice = async (req: Request, res: Response, next: NextFunction) => 
   }
 };
 
+const getNotices = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const notices = await noticeServices.getAllNotices(req.query.status as string);
+    res.json({ success: true, data: notices });
+  } catch (error) {
+    next(error);
+  }
+};
+
 export const noticeControllers = {
   createNotice,
+  getNotices
 };

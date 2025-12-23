@@ -7,6 +7,14 @@ const createNotice = async (payload: any) => {
   });
 };
 
+const getAllNotices = async (status?: string) => {
+  const filter: any = { targetType: 'INDIVIDUAL' };
+  if (status) filter.status = status;
+
+  return await Notice.find(filter).sort({ createdAt: -1 });
+};
+
 export const noticeServices = {
   createNotice,
+  getAllNotices,
 };

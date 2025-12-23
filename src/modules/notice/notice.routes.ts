@@ -6,5 +6,6 @@ import { noticeControllers } from './notice.controllers';
 const router: Router = Router();
 
 router.post('/', validate(createNoticeSchema), noticeControllers.createNotice);
+router.get('/', noticeControllers.getNotices);
 
 export const noticeRoutes = router;

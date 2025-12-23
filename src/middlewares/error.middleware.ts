@@ -15,10 +15,7 @@ const errorMiddleware = (
     return res.status(400).json({
       success: false,
       message: 'Validation failed',
-      errors: (err as any)?.errors?.map((e: any) => ({
-        field: e.path.join('.'),
-        message: e.message,
-      })),
+      error: (err as any)?.flatten()?.fieldErrors?.body[0],
     });
   }
 

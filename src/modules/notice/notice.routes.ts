@@ -7,5 +7,6 @@ const router: Router = Router();
 
 router.post('/', validate(createNoticeSchema), noticeControllers.createNotice);
 router.get('/', noticeControllers.getNotices);
+router.get('/:id', noticeControllers.getSingleNotice);
 
 export const noticeRoutes = router;

@@ -19,7 +19,18 @@ const getNotices = async (req: Request, res: Response, next: NextFunction) => {
   }
 };
 
+const getSingleNotice = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const notice = await noticeServices.getNoticeById(req.params.id as string);
+    if (!notice) throw new Error('Notice not found');
+    res.json({ success: true, data: notice });
+  } catch (error) {
+    next(error);
+  }
+};
+
 export const noticeControllers = {
   createNotice,
-  getNotices
+  getNotices,
+  getSingleNotice
 };

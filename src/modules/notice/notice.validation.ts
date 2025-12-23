@@ -55,3 +55,10 @@ export const createNoticeSchema = z.object({
     { message: "Status must be one of draft, published, or unpublished"}).optional(),
   }),
 });
+
+export const updateStatusSchema = z.object({
+  body: z.object({
+    status: z.enum(['draft', 'published', 'unpublished'], 
+    { message: "Status must be one of draft, published, or unpublished"}),
+  }),
+});

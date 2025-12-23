@@ -18,8 +18,20 @@ const getNoticeById = async (id: string) => {
   return await Notice.findOne({ _id: id, targetType: 'INDIVIDUAL' });
 };
 
+const updateNoticeStatus = async (
+  id: string,
+  status: 'draft' | 'published' | 'unpublished'
+) => {
+  return await Notice.findOneAndUpdate(
+    { _id: id, targetType: 'INDIVIDUAL' },
+    { status },
+    { new: true }
+  );
+};
+
 export const noticeServices = {
   createNotice,
   getAllNotices,
-  getNoticeById
+  getNoticeById,
+  updateNoticeStatus
 };

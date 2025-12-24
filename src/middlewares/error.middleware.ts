@@ -2,6 +2,7 @@ import { Request, Response, NextFunction } from 'express';
 import { ZodError } from 'zod';
 import mongoose from 'mongoose';
 import { logger } from '../config/logger';
+import multer from 'multer';
 
 const errorMiddleware = (
   err: any,
@@ -46,6 +47,28 @@ const errorMiddleware = (
   res.status(500).json({
     success: false,
     message: 'Internal Server Error',
+  });
+};
+
+export const uploadErrorHandler = (error: any, req: Request, res: Response, next: NextFunction) => {
+  if (error instanceof multer.MulterError) {
+    if (error.code === 'LIMIT_FILE_SIZE') {
+      return res.status(400).json({
+        success: false,
+        message: 'File size too large. Maximum size is 5MB.',
+      });
+    }
+    if (error.code === 'LIMIT_FILE_COUNT') {
+      return res.status(400).json({
+        success: false,
+        message: 'Too many files. Maximum is 10 files.',
+      });
+    }
+  }
+  
+  res.status(500).json({
+    success: false,
+    message: error.message || 'An error occurred during upload',
   });
 };
 
